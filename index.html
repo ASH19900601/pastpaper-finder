@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Past Paper Finder · 历年真题直连聚合</title>
+    <meta name="description" content="IGCSE & A-Level 历年真题直连下载聚合。自动拼装 CAIE / AQA 官方与镜像下载链接，并显示分数线。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand"><i class="fas fa-folder-open"></i> Past Paper Finder</div>
+        <button id="settingsBtn" class="header-btn" title="高级设置"><i class="fas fa-gear"></i> 设置</button>
+    </header>
+
+    <main class="page pastpapers-page">
+        <section class="intro blog-hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Exam Resources</p>
+                <h1>Past Papers 聚合库</h1>
+                <p>快速生成 CAIE 和 AQA 的 IGCSE 与 A-Level 历年真题下载链接。自动拼装多个公开教育镜像的直连地址，并附带官方分数线参考。</p>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <span class="hero-badge">Direct Download</span>
+            </div>
+        </section>
+
+        <section class="paper-selector-glass" aria-label="真题筛选器">
+            <div class="selector-header">
+                <h2>选择试卷参数</h2>
+                <p>选择你要下载的真题科目和场次，系统会自动为你拼装下载路线。</p>
+            </div>
+            <form id="paperForm" class="paper-form">
+                <div class="form-group">
+                    <label for="level">学习阶段 (Level)</label>
+                    <select id="level" required>
+                        <option value="igcse" selected>Cambridge IGCSE</option>
+                        <option value="alevel">Cambridge A-Level</option>
+                        <option value="aqa-igcse">AQA IGCSE</option>
+                        <option value="aqa-alevel">AQA AS &amp; A-Level</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subject">科目 (Subject)</label>
+                    <select id="subject" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="year">年份 (Year)</label>
+                    <select id="year" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="season">考季 (Season)</label>
+                    <select id="season" required>
+                        <option value="m">March (Spring)</option>
+                        <option value="s" selected>May/June (Summer)</option>
+                        <option value="w">Oct/Nov (Winter)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="type">文件类型 (Type)</label>
+                    <select id="type" required>
+                        <option value="qp" selected>试卷 (Question Paper)</option>
+                        <option value="ms">答案 (Mark Scheme)</option>
+                        <option value="in">插页 (Insert)</option>
+                        <option value="er">考官报告 (Examiner Report)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paper">试卷及变体 (Paper &amp; Variant)</label>
+                    <select id="paper" required>
+                        <option value="11">Paper 1, Variant 1</option>
+                        <option value="12" selected>Paper 1, Variant 2</option>
+                        <option value="13">Paper 1, Variant 3</option>
+                        <option value="21">Paper 2, Variant 1</option>
+                        <option value="22">Paper 2, Variant 2</option>
+                        <option value="23">Paper 2, Variant 3</option>
+                        <option value="31">Paper 3, Variant 1</option>
+                        <option value="32">Paper 3, Variant 2</option>
+                        <option value="33">Paper 3, Variant 3</option>
+                        <option value="41">Paper 4, Variant 1</option>
+                        <option value="42">Paper 4, Variant 2</option>
+                        <option value="43">Paper 4, Variant 3</option>
+                        <option value="51">Paper 5, Variant 1</option>
+                        <option value="52">Paper 5, Variant 2</option>
+                        <option value="53">Paper 5, Variant 3</option>
+                        <option value="61">Paper 6, Variant 1</option>
+                        <option value="62">Paper 6, Variant 2</option>
+                        <option value="63">Paper 6, Variant 3</option>
+                    </select>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn-generate">
+                        <i class="fas fa-magic"></i> 生成下载链接
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                <h3><i class="fas fa-download"></i> 发现直连下载节点</h3>
+                <p class="results-file-name" id="resultFileName">0580_s23_qp_12.pdf</p>
+            </div>
+            <div class="mirrors-grid" id="mirrorsContainer"></div>
+
+            <div id="thresholdCard" class="threshold-card">
+                <div class="threshold-header">
+                    <i class="fas fa-chart-line"></i> 该试卷官方分数线 (Grade Thresholds)
+                </div>
+                <div class="threshold-grid" id="thresholdGrid"></div>
+                <div class="t-disclaimer" id="thresholdDisclaimer">
+                    * A* 分数线由系统根据公式 <code>A* = A + (A - B)</code> 自动预估，仅供参考。
+                </div>
+            </div>
+
+            <div class="notice-alert">
+                <i class="fas fa-info-circle"></i> 提示：推荐首选 <strong>BestExamHelp</strong> 节点。各镜像可用性会实时探测。
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>纯前端开源项目 · 仅生成第三方公开镜像的下载链接，不托管任何试卷文件。考试资源版权归各考试局所有。</p>
+    </footer>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-backdrop" style="display:none;">
+        <div class="modal-content paper-selector-glass">
+            <h3><i class="fas fa-gear"></i> 高级设置</h3>
+            <p class="modal-desc">本工具不需要任何 API 密钥。唯一可选项是「链接可用性探测代理」，用于检测镜像链接是否可访问。默认使用公开 CORS 服务，你也可以换成自己的代理。</p>
+            <div class="form-group">
+                <label>链接探测代理 URL（可选）</label>
+                <input type="text" id="cfg-checkProxy" placeholder="https://api.allorigins.win/get?url=">
+                <small class="field-hint">程序会把待检测的链接 encodeURIComponent 后拼接在该地址末尾，并期望返回包含 <code>status.http_code</code> 的 JSON。留空则禁用可用性探测。</small>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cfgCancelBtn">取消</button>
+                <button class="btn-primary" id="cfgSaveBtn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/pastpapers.js"></script>
+</body>
+</html>

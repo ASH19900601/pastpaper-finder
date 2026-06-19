@@ -1,0 +1,9 @@
+{
+  "name": "pastpaper-finder",
+  "version": "1.0.0",
+  "description": "IGCSE & A-Level 历年真题直连聚合器（纯前端）",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
