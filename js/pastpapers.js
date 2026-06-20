@@ -301,9 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let html = `<div class="t-box"><div class="t-label">满分 (Max)</div><div class="t-value">${t.max}</div></div>`;
         if (t.aStar) html += `<div class="t-box t-astar"><div class="t-label">A* ${t.predicted ? '(预测)' : ''}</div><div class="t-value">${t.aStar}</div></div>`;
-        if (t.a !== undefined) html += `<div class="t-box"><div class="t-label">A</div><div class="t-value">${t.a}</div></div>`;
-        if (t.b !== undefined) html += `<div class="t-box"><div class="t-label">B</div><div class="t-value">${t.b}</div></div>`;
-        if (t.c !== undefined) html += `<div class="t-box"><div class="t-label">C</div><div class="t-value">${t.c}</div></div>`;
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g'].forEach(grade => {
+            if (t[grade] !== undefined) html += `<div class="t-box"><div class="t-label">${grade.toUpperCase()}</div><div class="t-value">${t[grade]}</div></div>`;
+        });
 
         tGrid.innerHTML = html;
         tCard.style.display = 'block';

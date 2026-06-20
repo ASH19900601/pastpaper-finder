@@ -80,3 +80,15 @@ test('分数线：预测值超过满分时封顶为 max', () => {
 test('分数线：空数据返回 null', () => {
     assert.strictEqual(PPCore.computeThreshold(undefined), null);
 });
+
+test('分数线：核心级试卷透传 C-G（无 A/B 也能展示低等级）', () => {
+    const t = PPCore.computeThreshold({ max: 40, c: 21, d: 18, e: 15, f: 13, g: 11 });
+    assert.strictEqual(t.a, undefined);
+    assert.strictEqual(t.b, undefined);
+    assert.strictEqual(t.c, 21);
+    assert.strictEqual(t.d, 18);
+    assert.strictEqual(t.e, 15);
+    assert.strictEqual(t.f, 13);
+    assert.strictEqual(t.g, 11);
+    assert.strictEqual(t.aStar, undefined);
+});

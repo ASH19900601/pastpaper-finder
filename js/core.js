@@ -99,7 +99,7 @@
             if (aStar > t.max) aStar = t.max;
             predicted = true;
         }
-        return { max: t.max, aStar, a: t.a, b: t.b, c: t.c, predicted };
+        return { max: t.max, aStar, a: t.a, b: t.b, c: t.c, d: t.d, e: t.e, f: t.f, g: t.g, predicted };
     }
 
     return {
